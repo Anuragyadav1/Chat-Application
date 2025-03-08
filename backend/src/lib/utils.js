@@ -25,10 +25,11 @@ export const generateToken = (userId, res) => {
 
   res.cookie("jwt", token, {
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    httpOnly: true, // Prevent XSS attacks
-    sameSite: "None", // Allow cross-site cookies (important for frontend-backend on different domains)
-    secure: process.env.NODE_ENV === "production", // Ensure only HTTPS in production
+    httpOnly: true, // Prevents XSS attacks
+    sameSite: process.env.NODE_ENV === "production" ? "None" : "Strict", // Allow cross-site cookies in production
+    secure: process.env.NODE_ENV === "production", // Use HTTPS in production
   });
 
   return token;
 };
+
